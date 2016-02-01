@@ -45,16 +45,13 @@ sell.
 =end
 
 def stock_picker(prices)
-=begin
-Set prices[0] as min. Go along prices and compare differences,
-recording the maximum price difference as you go. If you reach a new min,
-set it as min instead, and continue comparing differences to the maximum.
-=end
-	min = 0								# Initialize everything to 0
-	buy = 0
-	sell = 0
-	max_diff = 0
+	# Initialize everything to 0
+	min = 0			# Day with lowest price so far					
+	buy = 0			# Buy day with best max_diff so far
+	sell = 0		# Sell day with best max_diff so far
+	max_diff = 0	# Best value of prices[sell]-prices[buy]
 	(1...prices.length).each do |i|
+		# Go through each day - not necessary to do the first
 		if prices[i] < prices[min]
 			# If current price is less than current min:
 			min = i						# Set as current min
@@ -72,3 +69,30 @@ end
 
 puts "#{stock_picker([17,3,6,9,15,8,6,1,10])}"
 puts "#{stock_picker([3, 8, 9, 2, 3, 5, 16, 1])}"
+puts "#{stock_picker([5, 4, 3, 2, 1])}"
+
+# Project 3: Substrings
+
+=begin
+Task:
+Implement a method that takes a string and an array of substrings
+(a "dictionary") and returns a hash listing each substring found in
+the string and how many times it occurred, case insensitive.
+=end
+
+def substrings(input, dictionary)
+	hash = {}					# Initialize empty hash
+	dictionary.each do |word|
+		# For each word, count the number of times it appears
+		count = input.downcase.scan(word.downcase).length
+		if count > 0
+			# If greater than 0:
+			hash[word] = count	# Add word => count to hash
+		end
+	end
+	hash
+end
+
+dictionary = ["below","down","go","going","horn","how","howdy","it","i","low","own","part","partner","sit"]
+puts "#{substrings("below", dictionary)}"
+puts "#{substrings("Howdy partner, sit down! How's it going?", dictionary)}"
